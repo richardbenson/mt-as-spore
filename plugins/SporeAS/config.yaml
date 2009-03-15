@@ -1,0 +1,37 @@
+name: Action Stream: Sporepedia
+id: SporeAS
+key: SporeAS
+author_link: http://www.richardbenson.co.uk/
+author_name: Richard Benson
+description: Display your Spore creature creations in your action stream
+version: 0.1
+plugin_link: http://www.richardbenson.co.uk/work/programming/mt-plugins/spore-action-stream/
+
+profile_services:
+    spore:
+        name: Spore
+        url:  http://www.spore.com/view/profile/%s
+        ident_example: http://www.spore.com/view/profile/xxxxxxxxxxxxx
+        icon: images/spore.png
+
+action_streams:
+    spore:
+        creatures:
+            name: Creatures
+            description: My Creations
+            fields:
+                - assetid
+            html_form: '[_1] gave life to <a href="[_2]">[_3]</a>'
+            html_params:
+                - url
+                - title
+                - assetid
+            url: 'http://www.richardbenson.co.uk/files/code/sporeactionstream/grabdata.asp?SporeUserName={{ident}}'
+            identifier: assetid
+            xpath:
+                foreach: //creature
+                get:
+                    assetid: assetid/child::text()
+                    url: url/child::text()
+                    title: name/child::text()
+                    thumbnail: thumblink/child::text()
